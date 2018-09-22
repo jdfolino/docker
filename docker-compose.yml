@@ -1,0 +1,32 @@
+version: '3'
+services:
+  app_one:
+    build: ./app_one
+    ports:
+    - "4567:4567"
+  nginx:
+    image: "nginx:1.15.3"
+  transmission_tv:
+    image: "linuxserver/transmission"
+    volumes:
+    - ./transmission/config:/config
+    - ${BASE_TRANSMISSION_DIR}/TV:/downloads
+    environment:
+    - PGID=0
+    - PUID=0
+    - TZ=AEST
+    ports:
+    - "9091:9091"
+    - "51413:51413"
+  transmission_movies:
+    image: "linuxserver/transmission"
+    volumes:
+    - ./transmission/config:/config
+    - ${BASE_TRANSMISSION_DIR}/Movies:/downloads
+    environment:
+    - PGID=0
+    - PUID=0
+    - TZ=AEST
+    ports:
+    - "9092:9091"
+    - "51414:51413"
