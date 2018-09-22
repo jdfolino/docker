@@ -4,9 +4,20 @@ services:
     build: ./app_one
     ports:
     - "4567:4567"
+  plex:
+    image: "linuxserver/plex"
+    environment:
+    - VERSION=latest
+    - TZ=America/New_York
+    ports:
+    - "32400:32400"
   nginx:
     image: "nginx:1.15.3"
-  transmission_tv:
+    volumes:
+    - ./nginx/config:/etc/nginx
+    ports:
+    - "80:80"
+  transmission:
     image: "linuxserver/transmission"
     volumes:
     - ./transmission/config:/config
