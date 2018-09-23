@@ -1,23 +1,29 @@
 version: '3'
 services:
-  app_one:
-    build: ./app_one
+  dashboard:
+    build: ./dashboard
     ports:
-    - "4567:4567"
+    - ${DASHBOARD_PORT}:4567
+    environment:
+    - DASHBOARD_URL=${BASE_URL}:${DASHBOARD_PORT}
+    - CLOUDCMD_URL=${BASE_URL}:${CLOUDCMD_PORT}
+    - PLEX_URL=${BASE_URL}:${PLEX_PORT}
+    - TRANSMISSION_TV_URL=${BASE_URL}:${TRANSMISSION_TV_PORT}
+    - TRANSMISSION_MOVIES_URL=${BASE_URL}:${TRANSMISSION_MOVIES_PORT}
   plex:
     image: "linuxserver/plex"
     environment:
     - VERSION=latest
-    - TZ=America/New_York
+    - TZ=Australia/Melbourne
     ports:
-    - "32400:32400"
-  nginx:
-    image: "nginx:1.15.3"
+    - ${PLEX_PORT}:32400
+  cloudcmd:
+    image: "coderaiser/cloudcmd"
     volumes:
-    - ./nginx/config:/etc/nginx
+    - ${BASE_TRANSMISSION_DIR}:/downloads
     ports:
-    - "80:80"
-  transmission:
+    - ${CLOUDCMD_PORT}:8000
+  transmission_tv:
     image: "linuxserver/transmission"
     volumes:
     - ./transmission/config:/config
@@ -27,7 +33,7 @@ services:
     - PUID=0
     - TZ=AEST
     ports:
-    - "9091:9091"
+    - ${TRANSMISSION_TV_PORT}:9091
     - "51413:51413"
   transmission_movies:
     image: "linuxserver/transmission"
@@ -39,5 +45,5 @@ services:
     - PUID=0
     - TZ=AEST
     ports:
-    - "9092:9091"
+    - ${TRANSMISSION_MOVIES_PORT}:9091
     - "51414:51413"
