@@ -15,6 +15,10 @@ services:
     environment:
     - VERSION=latest
     - TZ=Australia/Melbourne
+    volumes:
+    - ./data/config:/config
+    - ${CINEMA_DIR}:/cinema
+    - ${TV_DIR}:/tv
     ports:
     - ${PLEX_PORT}:32400
   cloudcmd:
@@ -32,6 +36,7 @@ services:
     - PGID=0
     - PUID=0
     - TZ=AEST
+    - TR_DOWNLOAD_DIR=/downloads
     ports:
     - ${TRANSMISSION_TV_PORT}:9091
     - "51413:51413"
@@ -44,6 +49,11 @@ services:
     - PGID=0
     - PUID=0
     - TZ=AEST
+    - TR_DOWNLOAD_DIR=/downloads
+    - TR_IDLE_SEEDING_LIMIT_ENABLED=true
+    - TR_IDLE_SEEDING_LIMIT=600
+    - TR_RATIO_LIMIT_ENABLED=true
+    - TR_RATIO_LIMIT=4
     ports:
     - ${TRANSMISSION_MOVIES_PORT}:9091
     - "51414:51413"
