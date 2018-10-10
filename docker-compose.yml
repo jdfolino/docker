@@ -4,6 +4,7 @@ services:
     build: ./dashboard
     ports:
     - ${DASHBOARD_PORT}:4567
+    command: bundle exec ruby app.rb
     environment:
     - DASHBOARD_URL=${BASE_URL}:${DASHBOARD_PORT}
     - CLOUDCMD_URL=${BASE_URL}:${CLOUDCMD_PORT}
