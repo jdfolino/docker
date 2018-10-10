@@ -31,7 +31,7 @@ services:
   transmission_tv:
     image: "linuxserver/transmission"
     volumes:
-    - ./transmission/config:/config
+    - ${TV_CONFIG_DIR}:/config
     - ${BASE_TRANSMISSION_DIR}/TV:/downloads
     environment:
     - PGID=0
@@ -44,7 +44,7 @@ services:
   transmission_movies:
     image: "linuxserver/transmission"
     volumes:
-    - ./transmission/config:/config
+    - ${CINEMA_CONFIG_DIR}:/config
     - ${BASE_TRANSMISSION_DIR}/Movies:/downloads
     environment:
     - PGID=0
