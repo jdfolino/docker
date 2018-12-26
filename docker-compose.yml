@@ -22,6 +22,14 @@ services:
     - ${TV_DIR}:/tv
     ports:
     - ${PLEX_PORT}:32400
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 1G
   cloudcmd:
     image: "coderaiser/cloudcmd"
     volumes:
