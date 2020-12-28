@@ -30,6 +30,9 @@ services:
     - ${TV_DIR}:/tv
     ports:
     - ${CLOUDCMD_PORT}:8000
+  ######################################    
+  # Torrent Servers
+  ######################################
   transmission_tv:
     image: "linuxserver/transmission"
     volumes:
@@ -41,6 +44,10 @@ services:
     - PUID=0
     - TZ=AEST
     - TR_DOWNLOAD_DIR=/tv
+    - TR_IDLE_SEEDING_LIMIT_ENABLED=true
+    - TR_IDLE_SEEDING_LIMIT=600
+    - TR_RATIO_LIMIT_ENABLED=true
+    - TR_RATIO_LIMIT=4
     ports:
     - ${TRANSMISSION_TV_PORT}:9091
     - "51413:51413"
